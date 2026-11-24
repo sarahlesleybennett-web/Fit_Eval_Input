@@ -1,0 +1,2444 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>BARRACUDA DRACONA Fitness Evaluation 2026-2027</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            navy: {
+              950: '#040914',
+              900: '#081226',
+              800: '#0F1E3A',
+              700: '#182D54',
+            },
+            barracuda: {
+              400: '#22D3EE',
+              500: '#06B6D4',
+              600: '#0891B2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #040914;
+      color: #F8FAFC;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Custom scrollbar for sleek look */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #081226;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #182D54;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06B6D4;
+    }
+    /* Print stylesheet for clean PDF export */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+      }
+      .print-text-dark {
+        color: #0f172a !important;
+      }
+      .print-border {
+        border-color: #cbd5e1 !important;
+      }
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.7; }
+    }
+    .timer-glow {
+      animation: pulse-ring 2.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-navy-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-navy-950">
+
+  <!-- Top Sticky Header & Progress Bar -->
+  <header class="sticky top-0 z-40 bg-navy-900/95 backdrop-blur-md border-b border-navy-700/80 shadow-lg no-print">
+    <div class="max-w-3xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-600 flex items-center justify-center text-navy-950 font-extrabold shadow-md shadow-cyan-500/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-white">BARRACUDA DRACONA</h1>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">2026–27 Eval</span>
+            </div>
+            <p id="header-subtitle" class="text-xs text-slate-400 truncate max-w-[200px] sm:max-w-xs">Fitness Evaluation Protocol</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Sound Toggle -->
+          <button id="btn-sound-toggle" type="button" onclick="toggleSound()" title="Toggle Timer Chime" class="p-2 rounded-xl bg-navy-800 hover:bg-navy-700 border border-navy-700 text-cyan-400 transition">
+            <svg id="icon-sound-on" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+            <svg id="icon-sound-off" class="w-4 h-4 hidden text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          </button>
+
+          <!-- Step Drawer / Quick Jump -->
+          <button type="button" onclick="toggleStepDrawer()" class="px-2.5 py-1.5 rounded-xl bg-navy-800 hover:bg-navy-700 border border-navy-700 text-xs font-semibold text-slate-200 flex items-center gap-1.5 transition">
+            <span id="step-counter-badge">Step 1/10</span>
+            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="w-full h-2 bg-navy-950 rounded-full overflow-hidden border border-navy-800">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-500 to-teal-400 transition-all duration-300 rounded-full" style="width: 10%;"></div>
+      </div>
+    </div>
+
+    <!-- Collapsible Step Navigation Drawer -->
+    <div id="step-drawer" class="hidden border-t border-navy-800 bg-navy-900 px-4 py-3 max-h-72 overflow-y-auto">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Jump to Station</span>
+          <button type="button" onclick="confirmResetAll()" class="text-xs text-rose-400 hover:text-rose-300 font-medium">Reset Form Data</button>
+        </div>
+        <div id="step-drawer-list" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast / Message Banner (No alert() used anywhere) -->
+  <div id="toast-container" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
+    <div id="toast-box" class="px-4 py-2.5 rounded-2xl bg-navy-800 border border-cyan-500/50 text-white text-sm font-medium shadow-xl flex items-center gap-2">
+      <span id="toast-icon" class="text-cyan-400">✓</span>
+      <span id="toast-msg">Saved</span>
+    </div>
+  </div>
+
+  <!-- Custom Confirmation Modal -->
+  <div id="confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-navy-950/80 backdrop-blur-sm p-4 no-print">
+    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-sm w-full p-5 shadow-2xl">
+      <h3 id="confirm-title" class="text-lg font-bold text-white mb-2">Confirm Action</h3>
+      <p id="confirm-text" class="text-sm text-slate-300 mb-5">Are you sure?</p>
+      <div class="flex justify-end gap-2.5">
+        <button type="button" onclick="closeConfirmModal()" class="px-4 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-300 text-sm font-semibold transition">Cancel</button>
+        <button id="confirm-yes-btn" type="button" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-semibold transition">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-3xl w-full mx-auto px-4 py-6 pb-28">
+    <div id="wizard-container"></div>
+  </main>
+
+  <!-- Sticky Bottom Navigation Footer -->
+  <footer id="bottom-nav" class="fixed bottom-0 inset-x-0 z-30 bg-navy-900/95 backdrop-blur-md border-t border-navy-700/80 px-4 py-3 no-print">
+    <div class="max-w-3xl mx-auto flex items-center justify-between gap-3">
+      <button id="btn-prev" type="button" onclick="prevStep()" class="px-4 py-3 rounded-xl bg-navy-800 hover:bg-navy-700 disabled:opacity-40 disabled:pointer-events-none text-slate-200 font-semibold text-sm flex items-center gap-1.5 border border-navy-700 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span>Back</span>
+      </button>
+
+      <div class="text-center hidden sm:block">
+        <span id="autosave-indicator" class="text-xs text-slate-400 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+          Auto-saved locally
+        </span>
+      </div>
+
+      <button id="btn-next" type="button" onclick="nextStep()" class="flex-1 sm:flex-initial sm:min-w-[210px] px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-navy-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition">
+        <span id="btn-next-label">Continue</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // COACH CONFIGURATION: GOOGLE APPS SCRIPT WEB APP URL
+    // Paste your deployed Google Apps Script Web App URL between the quotes below
+    // (e.g., "https://script.google.com/macros/s/AKfycbx.../exec")
+    // =========================================================================
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzA7ZRC1ld1noJfYgOFwsu0PsSfS49fDT9WtMkm8CdF_1rXUryC8gbjDaxTtvjTvQOv/exec";
+
+    // =========================================================================
+    // STATE & DATA MODEL
+    // =========================================================================
+    const STORAGE_KEY = 'barracuda_dracona_eval_2026_2027_v1';
+    const SHEET_URL_OVERRIDE_KEY = 'barracuda_dracona_sheet_url_override_v1';
+
+    const defaultData = {
+      currentStepId: 'step0',
+      submissionType: 'Full Evaluation',
+      evalDate: new Date().toISOString().slice(0, 10),
+      erg6Date: new Date().toISOString().slice(0, 10),
+      athleteName: '',
+      signature: '',
+      ageCategory: 'Premier',
+      bodyWeight: '',
+      weightUnit: 'lbs',
+      morningRHR: '',
+      sleepQuantity: 7,
+      sleepQuality: 7,
+      safetyAck: false,
+      // Step 1: Sit & Reach
+      sitReachTrial1: '',
+      sitReachTrial2: '',
+      sitReachTrial3: '',
+      sitReachBest: '',
+      // Step 2: 2-Min Row Erg
+      row2Min1Effort: '',
+      row2Min1Dist: '',
+      row2FinishEffort: '',
+      row2Split2Dist: '',
+      row2TotalDist: '',
+      row2FinishHR: '',
+      // Step 3: Pull Ups
+      pullUpReps: '',
+      pullUpBand: 'None (Bodyweight)',
+      // Step 4: Bench Press 50% BW
+      bench50Load: '',
+      bench50Reps: '',
+      // Step 5: One-Arm DB Row Left
+      dbRowLeftLoad: '',
+      dbRowLeftReps: '',
+      // Step 6: One-Arm DB Row Right
+      dbRowRightLoad: '',
+      dbRowRightReps: '',
+      // Step 7: Core Stability Plank
+      plankSeconds: '',
+      plankStageReached: 'Stage 8 (Full 180s Completed)',
+      // Optional stations toggle & data
+      includeOptional: false,
+      optBench120Load: '120',
+      optBench120Reps: '',
+      optBenchPullLoad: '',
+      optBenchPullReps: '',
+      // 6-Min Personal Row Erg
+      erg6TotalDist: '',
+      erg6Min2Effort: '',
+      erg6Min2Dist: '',
+      erg6Min4Effort: '',
+      erg6Min4Dist: '',
+      erg6FinishEffort: '',
+      erg6FinalSplitDist: '',
+      erg6FinishHR: '',
+      // Track completed steps & sheet submission status
+      completedSteps: {},
+      lastSheetSubmission: ''
+    };
+
+    let state = loadState();
+    let isSubmittingToSheet = false;
+    let soundEnabled = true;
+
+    // Rest timer state
+    let restInterval = null;
+    let restRemainingSec = 0;
+    let restTotalSec = 0;
+    let restRunning = false;
+    let activeRestStepId = null;
+
+    // Plank 180s guide stopwatch state
+    let plankGuideInterval = null;
+    let plankGuideElapsed = 0;
+    let plankGuideRunning = false;
+
+    const PLANK_STAGES = [
+      { stage: 1, title: 'Start Position (Straight-Arm Plank)', dur: 60, start: 0, end: 60, desc: 'Hands on mat directly under shoulders, straight arms (NOT elbows), body in a straight line.' },
+      { stage: 2, title: 'Right Arm Extended Forward', dur: 15, start: 60, end: 75, desc: 'Lift right arm off ground and extend parallel to floor. Look straight down.' },
+      { stage: 3, title: 'Left Arm Extended Forward', dur: 15, start: 75, end: 90, desc: 'Return to Start Position, then lift left arm parallel to floor.' },
+      { stage: 4, title: 'Right Leg Extended Back', dur: 15, start: 90, end: 105, desc: 'Return to Start Position, then lift right leg off ground parallel to floor.' },
+      { stage: 5, title: 'Left Leg Extended Back', dur: 15, start: 105, end: 120, desc: 'Return to Start Position, then lift left leg off ground parallel to floor.' },
+      { stage: 6, title: 'Left Leg + Right Arm Extended', dur: 15, start: 120, end: 135, desc: 'Return to Start Position, then extend left leg and right arm simultaneously.' },
+      { stage: 7, title: 'Right Leg + Left Arm Extended', dur: 15, start: 135, end: 150, desc: 'Return to Start Position, then extend right leg and left arm simultaneously.' },
+      { stage: 8, title: 'Final Start Position Hold', dur: 30, start: 150, end: 180, desc: 'Return to straight-arm Start Position and hold steady until 180s completion.' }
+    ];
+
+    // =========================================================================
+    // WIZARD STEP DEFINITIONS
+    // =========================================================================
+    function getSteps() {
+      const steps = [
+        { id: 'step0', type: 'station', badge: 'Baseline & Safety', title: 'Athlete Profile & Readiness', shortTitle: '0. Athlete Profile' },
+        { id: 'erg6Only', type: 'erg6', badge: 'Personal Assessment • Within 7 Days', title: '6-Minute Rowing Ergometer (Return Entry)', shortTitle: '6-Min Erg (Return)' },
+        { id: 'step1', type: 'station', badge: 'Station 1', title: 'Sit & Reach Assessment', shortTitle: '1. Sit & Reach' },
+        { id: 'step2', type: 'station', badge: 'Station 2', title: '2-Minute Rowing Ergometer', shortTitle: '2. 2-Min Row Erg' },
+        {
+          id: 'rest_after_2min',
+          type: 'rest',
+          badge: 'Mandatory Recovery',
+          title: '15-Minute Rest Period',
+          shortTitle: 'Rest: 15 Min',
+          durationSec: 15 * 60,
+          nextStationTitle: 'Station 3: Dead Hang Pull-Ups',
+          prepChecklist: [
+            'Hydrate and allow heart rate to recover fully after the 2-minute maximal ergometer effort.',
+            'Inspect the pull-up bar and select a resistance band if needed for assisted progression.',
+            'Review protocol: Overhand grip, chin clearly above bar, full dead-hang extension, zero kipping.'
+          ]
+        },
+        { id: 'step3', type: 'station', badge: 'Station 3', title: 'Dead Hang Pull-Ups (Max Rep)', shortTitle: '3. Pull-Ups' },
+        {
+          id: 'rest_after_pullup',
+          type: 'rest',
+          badge: 'Mandatory Recovery',
+          title: '5-Minute Rest Period',
+          shortTitle: 'Rest: 5 Min',
+          durationSec: 5 * 60,
+          nextStationTitle: 'Station 4: Bench Press Max Rep (50% BW)',
+          prepChecklist: [
+            `Load barbell to 50% Body Weight (${getTargetWeight(50) ? getTargetWeight(50) + ' lbs' : 'rounded to nearest 5 lbs'}).`,
+            'Ensure collars are secured on the barbell and a spotter/monitor is ready.',
+            'Review protocol: Feet flat on floor, bar touches chest, full lockout, continuous ~1 rep/sec tempo.'
+          ]
+        },
+        { id: 'step4', type: 'station', badge: 'Station 4', title: 'Bench Press Max Rep (50% BW)', shortTitle: '4. Bench Press (50%)' },
+        {
+          id: 'rest_after_bench',
+          type: 'rest',
+          badge: 'Mandatory Recovery',
+          title: '5-Minute Rest Period',
+          shortTitle: 'Rest: 5 Min',
+          durationSec: 5 * 60,
+          nextStationTitle: 'Station 5A: One-Arm DB Row — Left Arm (25% BW)',
+          prepChecklist: [
+            `Select dumbbell equal to 25% Body Weight (${getTargetWeight(25) ? getTargetWeight(25) + ' lbs' : 'rounded to nearest 5 lbs'}).`,
+            'Set up a flat bench with clear floor space for kneeling one-knee support.',
+            'Review protocol: 60-second max reps, pull DB to front shoulder (anterior deltoid), full arm extension.'
+          ]
+        },
+        { id: 'step5', type: 'station', badge: 'Station 5A', title: 'One-Arm DB Row — Left Arm (60")', shortTitle: '5A. DB Row Left' },
+        {
+          id: 'rest_between_arms',
+          type: 'rest',
+          badge: 'Inter-Arm Recovery',
+          title: '3-Minute Rest Between Arms',
+          shortTitle: 'Rest: 3 Min',
+          durationSec: 3 * 60,
+          nextStationTitle: 'Station 5B: One-Arm DB Row — Right Arm (25% BW)',
+          prepChecklist: [
+            'Shake out grip and upper back during the 3-minute recovery.',
+            `Use the exact same dumbbell weight (${state.dbRowLeftLoad || getTargetWeight(25) || '25% BW'} lbs) as your Left Arm.`,
+            'Review protocol: 60-second max reps, contact anterior deltoid at top, full extension at bottom.'
+          ]
+        },
+        { id: 'step6', type: 'station', badge: 'Station 5B', title: 'One-Arm DB Row — Right Arm (60")', shortTitle: '5B. DB Row Right' },
+        {
+          id: 'rest_before_plank',
+          type: 'rest',
+          badge: 'Mandatory Recovery',
+          title: '5-Minute Rest Period',
+          shortTitle: 'Rest: 5 Min',
+          durationSec: 5 * 60,
+          nextStationTitle: 'Station 6: Core Stability Assessment (Straight-Arm Plank)',
+          prepChecklist: [
+            'Place an exercise mat on a flat non-slip surface.',
+            'Important Protocol Note: Perform on YOUR HANDS with STRAIGHT ARMS under shoulders (not on elbows).',
+            'Review the 8 continuous stages totaling 180 seconds (3 minutes).'
+          ]
+        },
+        { id: 'step7', type: 'station', badge: 'Station 6', title: 'Core Stability Assessment', shortTitle: '6. Core Stability' },
+        { id: 'optionalPrompt', type: 'prompt', badge: 'Evaluations #2 & #3', title: 'Optional Additional Stations', shortTitle: 'Optional Check' }
+      ];
+
+      if (state.includeOptional) {
+        steps.push(
+          {
+            id: 'rest_before_opt_bench',
+            type: 'rest',
+            badge: 'Mandatory Recovery',
+            title: '5-Minute Rest Period',
+            shortTitle: 'Rest: 5 Min',
+            durationSec: 5 * 60,
+            nextStationTitle: 'Optional Station 8: Bench Press Max Rep (120 lbs)',
+            prepChecklist: [
+              'Load barbell to 120 lbs with collars secured.',
+              'Review protocol: Full extension at top, bar touches chest, feet flat on floor, ~1 rep/sec tempo.'
+            ]
+          },
+          { id: 'step8', type: 'station', badge: 'Optional Station 8', title: 'Bench Press Max Rep (120 lbs)', shortTitle: '8. Opt. Bench 120#' },
+          {
+            id: 'rest_before_opt_pull',
+            type: 'rest',
+            badge: 'Mandatory Recovery',
+            title: '5-Minute Rest Period',
+            shortTitle: 'Rest: 5 Min',
+            durationSec: 5 * 60,
+            nextStationTitle: 'Optional Station 9: Bench Pull Max Rep (50% BW)',
+            prepChecklist: [
+              `Load barbell to 50% Body Weight (${getTargetWeight(50) ? getTargetWeight(50) + ' lbs' : 'rounded to nearest 5 lbs'}).`,
+              'Review protocol: Chest flat on bench, feet unanchored, hands do not swing past chin, bar touches bench each rep.'
+            ]
+          },
+          { id: 'step9', type: 'station', badge: 'Optional Station 9', title: 'Bench Pull Max Rep (50% BW)', shortTitle: '9. Opt. Bench Pull' }
+        );
+      }
+
+      steps.push({
+        id: 'summary',
+        type: 'summary',
+        badge: 'Final Report',
+        title: 'Summary & 6-Min Erg Submission',
+        shortTitle: 'Summary & Submit'
+      });
+
+      return steps;
+    }
+
+    // =========================================================================
+    // PERSISTENCE & HELPERS
+    // =========================================================================
+    function getActiveGoogleScriptUrl() {
+      // 1. Primary hardcoded constant
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.trim() !== '') {
+        return GOOGLE_SCRIPT_URL.trim();
+      }
+      // 2. Optional ?sheetUrl=... query parameter (also saved locally for convenience)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const paramUrl = params.get('sheetUrl');
+        if (paramUrl && paramUrl.trim().startsWith('https://')) {
+          localStorage.setItem(SHEET_URL_OVERRIDE_KEY, paramUrl.trim());
+          return paramUrl.trim();
+        }
+        const storedOverride = localStorage.getItem(SHEET_URL_OVERRIDE_KEY);
+        if (storedOverride && storedOverride.trim().startsWith('https://')) {
+          return storedOverride.trim();
+        }
+      } catch (e) {
+        console.warn('Unable to read sheetUrl override:', e);
+      }
+      return '';
+    }
+
+    function saveSheetUrlOverride(url) {
+      const cleaned = (url || '').trim();
+      try {
+        if (cleaned) {
+          localStorage.setItem(SHEET_URL_OVERRIDE_KEY, cleaned);
+          showToast('Google Sheet Web App URL saved locally', '🔗');
+        } else {
+          localStorage.removeItem(SHEET_URL_OVERRIDE_KEY);
+          showToast('Custom Google Sheet URL cleared', '🗑️');
+        }
+      } catch (e) {
+        console.warn('Unable to save sheetUrl override:', e);
+      }
+      renderCurrentStep();
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { ...defaultData };
+        const parsed = JSON.parse(raw);
+        return { ...defaultData, ...parsed };
+      } catch (e) {
+        console.warn('Failed to load saved state:', e);
+        return { ...defaultData };
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Failed to save state:', e);
+      }
+    }
+
+    function updateField(key, value) {
+      state[key] = value;
+
+      // Auto-calculate best Sit & Reach when trials change
+      if (key === 'sitReachTrial1' || key === 'sitReachTrial2' || key === 'sitReachTrial3') {
+        const vals = [state.sitReachTrial1, state.sitReachTrial2, state.sitReachTrial3]
+          .map(v => parseFloat(v))
+          .filter(v => !isNaN(v));
+        if (vals.length > 0) {
+          state.sitReachBest = String(Math.max(...vals));
+          const bestEl = document.getElementById('input-sitReachBest');
+          if (bestEl) bestEl.value = state.sitReachBest;
+        }
+      }
+
+      // Auto-fill target weights (rounded to nearest 5 lbs) if empty
+      if (key === 'bodyWeight') {
+        const w50 = getTargetWeight(50);
+        const w25 = getTargetWeight(25);
+        if (w50) {
+          if (!state.bench50Load) state.bench50Load = String(w50);
+          if (!state.optBenchPullLoad) state.optBenchPullLoad = String(w50);
+        }
+        if (w25) {
+          if (!state.dbRowLeftLoad) state.dbRowLeftLoad = String(w25);
+          if (!state.dbRowRightLoad) state.dbRowRightLoad = String(w25);
+        }
+      }
+
+      saveState();
+    }
+
+    function getBodyWeightLbs() {
+      const bw = parseFloat(state.bodyWeight);
+      if (isNaN(bw) || bw <= 0) return null;
+      return state.weightUnit === 'kg' ? bw * 2.20462 : bw;
+    }
+
+    function getBodyWeightKg() {
+      const bw = parseFloat(state.bodyWeight);
+      if (isNaN(bw) || bw <= 0) return null;
+      return state.weightUnit === 'kg' ? bw : bw / 2.20462;
+    }
+
+    function getTargetWeight(percent) {
+      const bwLbs = getBodyWeightLbs();
+      if (!bwLbs) return null;
+      const rawTarget = bwLbs * (percent / 100);
+      return Math.round(rawTarget / 5) * 5;
+    }
+
+    function getRelativeErgDistance(metersStr) {
+      const m = parseFloat(metersStr);
+      const bwKg = getBodyWeightKg();
+      if (isNaN(m) || m <= 0 || !bwKg) return '—';
+      // Standard Concept2 Weight-Adjusted / Relative distance metric
+      const wf = Math.pow(bwKg / 122.47, 0.222);
+      const corrected = Math.round(m / wf);
+      return `${corrected} m (Wf: ${wf.toFixed(3)})`;
+    }
+
+    function getRelativeErgMetersOnly(metersStr) {
+      const m = parseFloat(metersStr);
+      const bwKg = getBodyWeightKg();
+      if (isNaN(m) || m <= 0 || !bwKg) return '';
+      const wf = Math.pow(bwKg / 122.47, 0.222);
+      return String(Math.round(m / wf));
+    }
+
+    function showToast(msg, icon = '✓') {
+      const container = document.getElementById('toast-container');
+      const iconEl = document.getElementById('toast-icon');
+      const msgEl = document.getElementById('toast-msg');
+      if (!container || !iconEl || !msgEl) return;
+
+      iconEl.textContent = icon;
+      msgEl.textContent = msg;
+      container.classList.remove('opacity-0', 'translate-y-4');
+      container.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        container.classList.remove('opacity-100', 'translate-y-0');
+        container.classList.add('opacity-0', 'translate-y-4');
+      }, 2800);
+    }
+
+    // =========================================================================
+    // AUDIO CHIME (TONE.JS)
+    // =========================================================================
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      updateSoundIcons();
+      showToast(soundEnabled ? 'Timer audio chime enabled' : 'Timer audio chime muted', soundEnabled ? '🔔' : '🔕');
+    }
+
+    function updateSoundIcons() {
+      const onIcon = document.getElementById('icon-sound-on');
+      const offIcon = document.getElementById('icon-sound-off');
+      if (!onIcon || !offIcon) return;
+      if (soundEnabled) {
+        onIcon.classList.remove('hidden');
+        offIcon.classList.add('hidden');
+      } else {
+        onIcon.classList.add('hidden');
+        offIcon.classList.remove('hidden');
+      }
+    }
+
+    async function playChime(type = 'complete') {
+      if (!soundEnabled || typeof Tone === 'undefined') return;
+      try {
+        await Tone.start();
+        const synth = new Tone.Synth({
+          oscillator: { type: 'sine' },
+          envelope: { attack: 0.02, decay: 0.2, sustain: 0.2, release: 0.6 }
+        }).toDestination();
+        const now = Tone.now();
+        if (type === 'complete') {
+          synth.triggerAttackRelease('C5', '8n', now);
+          synth.triggerAttackRelease('E5', '8n', now + 0.16);
+          synth.triggerAttackRelease('G5', '4n', now + 0.32);
+        } else {
+          synth.triggerAttackRelease('A4', '16n', now);
+        }
+      } catch (e) {
+        console.warn('Audio playback skipped:', e);
+      }
+    }
+
+    // =========================================================================
+    // NAVIGATION & STEP DRAWER
+    // =========================================================================
+    function toggleStepDrawer() {
+      const drawer = document.getElementById('step-drawer');
+      if (!drawer) return;
+      drawer.classList.toggle('hidden');
+    }
+
+    function jumpToStep(stepId) {
+      stopRestTimer();
+      stopPlankGuideTimer();
+      state.currentStepId = stepId;
+      saveState();
+      const drawer = document.getElementById('step-drawer');
+      if (drawer) drawer.classList.add('hidden');
+      renderCurrentStep();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function confirmResetAll() {
+      const modal = document.getElementById('confirm-modal');
+      const title = document.getElementById('confirm-title');
+      const text = document.getElementById('confirm-text');
+      const yesBtn = document.getElementById('confirm-yes-btn');
+      if (!modal || !yesBtn) return;
+
+      title.textContent = 'Reset All Evaluation Data?';
+      text.textContent = 'This will clear all entered measurements, reps, and timer progress on this device.';
+      yesBtn.onclick = () => {
+        stopRestTimer();
+        stopPlankGuideTimer();
+        localStorage.removeItem(STORAGE_KEY);
+        state = { ...defaultData };
+        saveState();
+        closeConfirmModal();
+        const drawer = document.getElementById('step-drawer');
+        if (drawer) drawer.classList.add('hidden');
+        renderCurrentStep();
+        showToast('All evaluation data cleared', '🗑️');
+      };
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeConfirmModal() {
+      const modal = document.getElementById('confirm-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function prevStep() {
+      const steps = getSteps();
+      const idx = steps.findIndex(s => s.id === state.currentStepId);
+      if (idx > 0) {
+        stopRestTimer();
+        stopPlankGuideTimer();
+        state.currentStepId = steps[idx - 1].id;
+        saveState();
+        renderCurrentStep();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function nextStep() {
+      const steps = getSteps();
+      const idx = steps.findIndex(s => s.id === state.currentStepId);
+      if (idx === -1) return;
+
+      const current = steps[idx];
+
+      // Validate Step 0 essentials before advancing
+      if (current.id === 'step0') {
+        if (!state.athleteName || !state.athleteName.trim()) {
+          showToast('Please enter Athlete Full Name', '⚠️');
+          const el = document.getElementById('input-athleteName');
+          if (el) el.focus();
+          return;
+        }
+        if (!state.bodyWeight || parseFloat(state.bodyWeight) <= 0) {
+          showToast('Please enter Body Weight to calculate target loads', '⚠️');
+          const el = document.getElementById('input-bodyWeight');
+          if (el) el.focus();
+          return;
+        }
+        if (!state.signature || !state.signature.trim()) {
+          showToast('Please enter your Signature / Initials', '⚠️');
+          const el = document.getElementById('input-signature');
+          if (el) el.focus();
+          return;
+        }
+        if (!state.safetyAck) {
+          showToast('Please check the Safety & Warm-Up Acknowledgment box', '⚠️');
+          const el = document.getElementById('input-safetyAck');
+          if (el) el.focus();
+          return;
+        }
+      }
+
+      // Auto-populate target loads when entering strength stations if blank
+      const w50 = getTargetWeight(50);
+      const w25 = getTargetWeight(25);
+      if (w50 && !state.bench50Load) state.bench50Load = String(w50);
+      if (w25 && !state.dbRowLeftLoad) state.dbRowLeftLoad = String(w25);
+      if (w25 && !state.dbRowRightLoad) state.dbRowRightLoad = String(w25);
+      if (w50 && !state.optBenchPullLoad) state.optBenchPullLoad = String(w50);
+
+      state.completedSteps[current.id] = true;
+
+      if (idx < steps.length - 1) {
+        stopRestTimer();
+        stopPlankGuideTimer();
+        state.currentStepId = steps[idx + 1].id;
+        saveState();
+        renderCurrentStep();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function chooseOptionalPath(includeOpt) {
+      state.includeOptional = includeOpt;
+      state.completedSteps['optionalPrompt'] = true;
+      saveState();
+      const steps = getSteps();
+      const promptIdx = steps.findIndex(s => s.id === 'optionalPrompt');
+      if (promptIdx !== -1 && promptIdx < steps.length - 1) {
+        state.currentStepId = steps[promptIdx + 1].id;
+        saveState();
+        renderCurrentStep();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // =========================================================================
+    // REST TIMER LOGIC
+    // =========================================================================
+    function formatSeconds(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      const mins = Math.floor(s / 60);
+      const rem = s % 60;
+      return `${String(mins).padStart(2, '0')}:${String(rem).padStart(2, '0')}`;
+    }
+
+    function initRestTimerForStep(step) {
+      if (activeRestStepId !== step.id) {
+        stopRestTimer();
+        activeRestStepId = step.id;
+        restTotalSec = step.durationSec;
+        restRemainingSec = step.durationSec;
+        restRunning = true;
+        startRestInterval();
+      }
+    }
+
+    function startRestInterval() {
+      clearInterval(restInterval);
+      restRunning = true;
+      restInterval = setInterval(() => {
+        if (restRemainingSec > 0) {
+          restRemainingSec--;
+          updateRestTimerUI();
+          if (restRemainingSec === 10) {
+            playChime('tick');
+          }
+          if (restRemainingSec === 0) {
+            restRunning = false;
+            clearInterval(restInterval);
+            playChime('complete');
+            showToast('Rest period complete! Ready for next station.', '⏱️');
+            updateRestTimerUI();
+          }
+        }
+      }, 1000);
+    }
+
+    function toggleRestTimer() {
+      if (restRemainingSec <= 0) {
+        resetRestTimer();
+        return;
+      }
+      if (restRunning) {
+        clearInterval(restInterval);
+        restRunning = false;
+      } else {
+        startRestInterval();
+      }
+      updateRestTimerUI();
+    }
+
+    function resetRestTimer() {
+      clearInterval(restInterval);
+      restRemainingSec = restTotalSec;
+      restRunning = false;
+      updateRestTimerUI();
+    }
+
+    function stopRestTimer() {
+      clearInterval(restInterval);
+      restRunning = false;
+      activeRestStepId = null;
+    }
+
+    function updateRestTimerUI() {
+      const clockEl = document.getElementById('rest-clock-display');
+      const statusEl = document.getElementById('rest-status-label');
+      const btnEl = document.getElementById('btn-rest-toggle');
+      const ringEl = document.getElementById('rest-progress-ring');
+
+      if (clockEl) clockEl.textContent = formatSeconds(restRemainingSec);
+      if (statusEl) {
+        if (restRemainingSec === 0) {
+          statusEl.textContent = 'RECOVERY COMPLETE — READY TO START';
+          statusEl.className = 'text-xs font-extrabold uppercase tracking-widest text-emerald-400 mt-1';
+        } else if (restRunning) {
+          statusEl.textContent = 'COUNTING DOWN...';
+          statusEl.className = 'text-xs font-extrabold uppercase tracking-widest text-cyan-400 mt-1';
+        } else {
+          statusEl.textContent = 'TIMER PAUSED';
+          statusEl.className = 'text-xs font-extrabold uppercase tracking-widest text-amber-400 mt-1';
+        }
+      }
+      if (btnEl) {
+        btnEl.textContent = restRemainingSec === 0 ? 'Restart Timer' : (restRunning ? 'Pause Timer' : 'Resume Timer');
+      }
+      if (ringEl && restTotalSec > 0) {
+        const circumference = 2 * Math.PI * 88;
+        const pct = restRemainingSec / restTotalSec;
+        ringEl.style.strokeDasharray = `${circumference}`;
+        ringEl.style.strokeDashoffset = `${circumference * (1 - pct)}`;
+      }
+    }
+
+    // =========================================================================
+    // PLANK 180s LIVE STOPWATCH HELPER
+    // =========================================================================
+    function togglePlankGuideTimer() {
+      if (plankGuideRunning) {
+        clearInterval(plankGuideInterval);
+        plankGuideRunning = false;
+      } else {
+        if (plankGuideElapsed >= 180) plankGuideElapsed = 0;
+        plankGuideRunning = true;
+        plankGuideInterval = setInterval(() => {
+          plankGuideElapsed++;
+          updatePlankGuideUI();
+          if (plankGuideElapsed >= 180) {
+            clearInterval(plankGuideInterval);
+            plankGuideRunning = false;
+            playChime('complete');
+            state.plankSeconds = '180';
+            state.plankStageReached = 'Stage 8 (Full 180s Completed)';
+            saveState();
+            const inputEl = document.getElementById('input-plankSeconds');
+            if (inputEl) inputEl.value = '180';
+            showToast('Full 180s Core Stability protocol complete!', '🏆');
+            updatePlankGuideUI();
+          }
+        }, 1000);
+      }
+      updatePlankGuideUI();
+    }
+
+    function recordPlankStopNow() {
+      clearInterval(plankGuideInterval);
+      plankGuideRunning = false;
+      const currentStageObj = PLANK_STAGES.find(s => plankGuideElapsed >= s.start && plankGuideElapsed < s.end) || PLANK_STAGES[PLANK_STAGES.length - 1];
+      state.plankSeconds = String(plankGuideElapsed);
+      if (plankGuideElapsed >= 180) {
+        state.plankStageReached = 'Stage 8 (Full 180s Completed)';
+      } else {
+        const stageLabels = {
+          1: 'Stage 1 (Start Position)',
+          2: 'Stage 2 (Right Arm Extended)',
+          3: 'Stage 3 (Left Arm Extended)',
+          4: 'Stage 4 (Right Leg Extended)',
+          5: 'Stage 5 (Left Leg Extended)',
+          6: 'Stage 6 (Right Arm + Left Leg)',
+          7: 'Stage 7 (Left Arm + Right Leg)',
+          8: 'Stage 8 (Final Straight-Arm Hold)'
+        };
+        state.plankStageReached = stageLabels[currentStageObj.stage] || 'Stage 1 (Start Position)';
+      }
+      saveState();
+      renderCurrentStep();
+      showToast(`Logged ${plankGuideElapsed}s (${state.plankStageReached})`, '⏱️');
+    }
+
+    function resetPlankGuideTimer() {
+      clearInterval(plankGuideInterval);
+      plankGuideRunning = false;
+      plankGuideElapsed = 0;
+      updatePlankGuideUI();
+    }
+
+    function stopPlankGuideTimer() {
+      clearInterval(plankGuideInterval);
+      plankGuideRunning = false;
+    }
+
+    function updatePlankGuideUI() {
+      const clockEl = document.getElementById('plank-guide-clock');
+      const badgeEl = document.getElementById('plank-guide-stage-badge');
+      const btnEl = document.getElementById('btn-plank-toggle');
+      if (clockEl) clockEl.textContent = `${plankGuideElapsed}s / 180s`;
+      if (btnEl) btnEl.textContent = plankGuideRunning ? 'Pause Stopwatch' : 'Start Live 180s Stopwatch';
+
+      const activeStage = PLANK_STAGES.find(s => plankGuideElapsed >= s.start && plankGuideElapsed < s.end) || PLANK_STAGES[PLANK_STAGES.length - 1];
+      if (badgeEl && activeStage) {
+        badgeEl.textContent = `Stage ${activeStage.stage}: ${activeStage.title}`;
+      }
+
+      PLANK_STAGES.forEach(s => {
+        const row = document.getElementById(`plank-stage-row-${s.stage}`);
+        if (!row) return;
+        if (activeStage && s.stage === activeStage.stage && plankGuideElapsed > 0) {
+          row.className = 'p-2.5 rounded-xl border bg-cyan-500/15 border-cyan-400 text-white transition';
+        } else {
+          row.className = 'p-2.5 rounded-xl border bg-navy-950/60 border-navy-800 text-slate-300 transition';
+        }
+      });
+    }
+
+    // =========================================================================
+    // SHARED UI RENDERERS
+    // =========================================================================
+    function renderProtocolBox(bullets, restWarning = '') {
+      return `
+        <div class="bg-navy-900/80 border border-navy-700/80 rounded-2xl p-4 mb-5">
+          <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Protocol Checklist</span>
+          </div>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-slate-300 list-disc pl-5">
+            ${bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+          ${restWarning ? `
+            <div class="mt-3 pt-2.5 border-t border-navy-800 flex items-center gap-2 text-xs font-bold text-amber-400">
+              <span>⏱️</span>
+              <span>Next: ${restWarning}</span>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function renderTargetLoadBanner(percent, label) {
+      const target = getTargetWeight(percent);
+      return `
+        <div class="bg-gradient-to-r from-cyan-500/15 to-teal-500/10 border border-cyan-500/40 rounded-2xl p-4 mb-5 flex items-center justify-between gap-4">
+          <div>
+            <div class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${label} (${percent}% BW)</div>
+            <div class="text-xs text-slate-300 mt-0.5">
+              ${state.bodyWeight ? `Calculated from ${state.bodyWeight} ${state.weightUnit}, rounded to nearest 5 lbs` : 'Enter Body Weight in Step 0 to auto-calculate'}
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="font-mono text-2xl font-extrabold text-white">${target ? target + ' lbs' : '—'}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderBorgScaleHelper() {
+      return `
+        <details class="bg-navy-950/70 border border-navy-800 rounded-xl p-3 text-xs text-slate-400">
+          <summary class="cursor-pointer font-bold text-slate-300 select-none">Borg RPE Scale Reference (6–20)</summary>
+          <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px]">
+            <div><strong class="text-white">6–8:</strong> Very, very light</div>
+            <div><strong class="text-white">9–11:</strong> Very light to fairly light</div>
+            <div><strong class="text-white">12–14:</strong> Somewhat hard</div>
+            <div><strong class="text-cyan-400">15–16:</strong> Hard (heavy)</div>
+            <div><strong class="text-amber-400">17–18:</strong> Very hard</div>
+            <div><strong class="text-rose-400">19–20:</strong> Maximal exertion</div>
+          </div>
+        </details>
+      `;
+    }
+
+    function updateChrome(steps, idx, step) {
+      const badge = document.getElementById('step-counter-badge');
+      const subtitle = document.getElementById('header-subtitle');
+      const progressBar = document.getElementById('progress-bar');
+      const drawerList = document.getElementById('step-drawer-list');
+      const prevBtn = document.getElementById('btn-prev');
+      const nextBtn = document.getElementById('btn-next');
+      const nextLabel = document.getElementById('btn-next-label');
+      const bottomNav = document.getElementById('bottom-nav');
+
+      if (badge) badge.textContent = `Step ${idx + 1}/${steps.length}`;
+      if (subtitle) subtitle.textContent = step.title;
+      if (progressBar) {
+        const pct = Math.round(((idx + 1) / steps.length) * 100);
+        progressBar.style.width = `${pct}%`;
+      }
+
+      if (drawerList) {
+        drawerList.innerHTML = steps.map((s, i) => {
+          const isCurrent = s.id === step.id;
+          const isDone = !!state.completedSteps[s.id];
+          return `
+            <button type="button" onclick="jumpToStep('${s.id}')"
+              class="text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between border transition ${
+                isCurrent
+                  ? 'bg-cyan-500/20 border-cyan-400 text-white'
+                  : 'bg-navy-950/70 border-navy-800 text-slate-300 hover:border-navy-600'
+              }">
+              <span class="truncate">${s.shortTitle}</span>
+              <span class="ml-2 shrink-0 text-[10px] font-mono ${isDone ? 'text-emerald-400' : 'text-slate-500'}">
+                ${isCurrent ? 'ACTIVE' : (isDone ? '✓' : `#${i + 1}`)}
+              </span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      if (prevBtn) prevBtn.disabled = idx === 0;
+
+      if (bottomNav && nextBtn && nextLabel) {
+        if (step.id === 'summary' || step.id === 'optionalPrompt') {
+          nextBtn.classList.add('hidden');
+        } else {
+          nextBtn.classList.remove('hidden');
+          if (step.type === 'rest') {
+            nextLabel.textContent = 'Start Next Station';
+          } else if (step.id === 'step0') {
+            nextLabel.textContent = 'Start Evaluation';
+          } else {
+            nextLabel.textContent = 'Complete & Continue';
+          }
+        }
+      }
+    }
+
+    // =========================================================================
+    // MAIN STEP RENDERER
+    // =========================================================================
+    function renderCurrentStep() {
+      const steps = getSteps();
+      let idx = steps.findIndex(s => s.id === state.currentStepId);
+      if (idx === -1) {
+        idx = 0;
+        state.currentStepId = steps[0].id;
+      }
+      const step = steps[idx];
+      updateChrome(steps, idx, step);
+
+      const container = document.getElementById('wizard-container');
+      if (!container) return;
+
+      // -----------------------------------------------------------------------
+      // REST / RECOVERY COUNTDOWN SCREENS
+      // -----------------------------------------------------------------------
+      if (step.type === 'rest') {
+        initRestTimerForStep(step);
+        const circumference = 2 * Math.PI * 88;
+        const pct = restTotalSec > 0 ? restRemainingSec / restTotalSec : 0;
+        const dashOffset = circumference * (1 - pct);
+
+        container.innerHTML = `
+          <div class="bg-navy-900 border border-cyan-500/40 rounded-3xl p-6 sm:p-8 text-center shadow-2xl">
+            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-extrabold uppercase tracking-wider mb-2">
+              ${step.badge}
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">${step.title}</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Up Next: <strong class="text-cyan-400">${step.nextStationTitle}</strong></p>
+
+            <!-- Circular Countdown Ring -->
+            <div class="relative w-52 h-52 mx-auto my-6 flex items-center justify-center timer-glow">
+              <svg class="w-full h-full -rotate-90" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="88" stroke="#0F1E3A" stroke-width="10" fill="none" />
+                <circle id="rest-progress-ring" cx="100" cy="100" r="88" stroke="#22D3EE" stroke-width="10" stroke-linecap="round" fill="none"
+                  style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${dashOffset}; transition: stroke-dashoffset 0.5s linear;" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="rest-clock-display" class="font-mono text-4xl sm:text-5xl font-extrabold text-white tracking-tight">${formatSeconds(restRemainingSec)}</span>
+                <span id="rest-status-label" class="text-[10px] font-extrabold uppercase tracking-widest text-cyan-400 mt-1">
+                  ${restRemainingSec === 0 ? 'RECOVERY COMPLETE' : (restRunning ? 'COUNTING DOWN...' : 'TIMER PAUSED')}
+                </span>
+              </div>
+            </div>
+
+            <!-- Timer Controls -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-7">
+              <button id="btn-rest-toggle" type="button" onclick="toggleRestTimer()"
+                class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-extrabold text-xs sm:text-sm transition">
+                ${restRemainingSec === 0 ? 'Restart Timer' : (restRunning ? 'Pause Timer' : 'Resume Timer')}
+              </button>
+              <button type="button" onclick="resetRestTimer()"
+                class="px-4 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 border border-navy-700 text-slate-300 font-semibold text-xs sm:text-sm transition">
+                Reset (${Math.round(step.durationSec / 60)}')
+              </button>
+            </div>
+
+            <!-- Next Station Preparation Checklist -->
+            <div class="text-left bg-navy-950/90 border border-navy-800 rounded-2xl p-4 sm:p-5">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-teal-400 mb-2">Preparation Checklist Before Next Station</div>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc pl-5">
+                ${step.prepChecklist.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 0: ATHLETE PROFILE & READINESS
+      // -----------------------------------------------------------------------
+      if (step.id === 'step0') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+            <p class="text-sm text-slate-400 mt-1">Enter athlete baseline data before beginning benchmarking activities.</p>
+          </div>
+
+          <!-- Returning Athlete Quick-Entry Banner for 6-Min Erg -->
+          <div class="mb-5 bg-gradient-to-r from-teal-950/60 to-navy-900 border border-teal-500/40 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-teal-400">Returning Within 7 Days?</div>
+              <p class="text-xs text-slate-300 mt-0.5">Already completed your on-site stations and just logging your <strong>6-minute ergometer test</strong>?</p>
+            </div>
+            <button type="button" onclick="openSixMinErgReturn()"
+              class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-navy-950 font-extrabold text-xs shrink-0 transition">
+              Log 6-Min Erg Only →
+            </button>
+          </div>
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-5 shadow-xl">
+            <!-- Athlete Name, Age Category & Evaluation Date -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Athlete Full Name *</label>
+                <input id="input-athleteName" type="text" value="${escapeHtml(state.athleteName)}" oninput="updateField('athleteName', this.value)"
+                  placeholder="e.g., Barney Rubble"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white placeholder-slate-500 text-sm font-medium" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Age Category</label>
+                <select onchange="updateField('ageCategory', this.value)"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white text-sm font-medium">
+                  ${['Premier', 'Senior A (40+)', 'Senior B (50+)', 'Senior C (60+)'].map(cat =>
+                    `<option value="${cat}" ${state.ageCategory === cat ? 'selected' : ''}>${cat}</option>`
+                  ).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Evaluation Date</label>
+                <input id="input-evalDate" type="date" value="${escapeHtml(state.evalDate)}" oninput="updateField('evalDate', this.value)"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white text-sm font-mono font-medium" />
+              </div>
+            </div>
+
+            <!-- Body Weight & Unit Toggle -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Body Weight (No Shoes, Calibrated Scale) *</label>
+                <div class="inline-flex rounded-lg bg-navy-950 p-0.5 border border-navy-700">
+                  <button type="button" onclick="setWeightUnit('lbs')" class="px-2.5 py-1 rounded-md text-xs font-bold transition ${state.weightUnit === 'lbs' ? 'bg-cyan-500 text-navy-950' : 'text-slate-400 hover:text-white'}">LBS</button>
+                  <button type="button" onclick="setWeightUnit('kg')" class="px-2.5 py-1 rounded-md text-xs font-bold transition ${state.weightUnit === 'kg' ? 'bg-cyan-500 text-navy-950' : 'text-slate-400 hover:text-white'}">KG</button>
+                </div>
+              </div>
+              <div class="relative">
+                <input id="input-bodyWeight" type="number" step="0.1" inputmode="decimal" value="${escapeHtml(state.bodyWeight)}" oninput="updateField('bodyWeight', this.value); refreshTargetPreviews();"
+                  placeholder="Enter body weight in ${state.weightUnit}"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white placeholder-slate-500 text-base font-mono font-bold" />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold uppercase text-cyan-400">${state.weightUnit}</span>
+              </div>
+              <!-- Live Target Weight Preview -->
+              <div id="bw-target-preview" class="mt-2.5 grid grid-cols-2 gap-2.5">
+                <div class="bg-navy-950/90 border border-navy-800 rounded-xl px-3 py-2 flex items-center justify-between">
+                  <span class="text-xs text-slate-400">50% BW (Bench Press/Pull)</span>
+                  <span class="text-xs font-mono font-bold text-cyan-400">${getTargetWeight(50) ? getTargetWeight(50) + ' lbs' : '—'}</span>
+                </div>
+                <div class="bg-navy-950/90 border border-navy-800 rounded-xl px-3 py-2 flex items-center justify-between">
+                  <span class="text-xs text-slate-400">25% BW (One-Arm DB Row)</span>
+                  <span class="text-xs font-mono font-bold text-cyan-400">${getTargetWeight(25) ? getTargetWeight(25) + ' lbs' : '—'}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Morning Resting Heart Rate -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Morning Resting Heart Rate (BPM)</label>
+              <div class="relative">
+                <input type="number" inputmode="numeric" value="${escapeHtml(state.morningRHR)}" oninput="updateField('morningRHR', this.value)"
+                  placeholder="e.g., 56"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white placeholder-slate-500 text-sm font-mono font-bold" />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">BPM</span>
+              </div>
+            </div>
+
+            <!-- Sleep Quantity (1-10) -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-bold uppercase tracking-wider text-slate-300">Sleep Quantity (1–10 Scale)</label>
+                <span id="val-sleepQuantity" class="px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-400 font-mono font-bold text-sm">${state.sleepQuantity} / 10</span>
+              </div>
+              <div class="grid grid-cols-10 gap-1.5">
+                ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                  <button type="button" onclick="setRating('sleepQuantity', ${n})"
+                    class="py-2.5 rounded-xl font-mono text-xs font-bold border transition ${
+                      Number(state.sleepQuantity) === n
+                        ? 'bg-cyan-500 border-cyan-400 text-navy-950 shadow-md'
+                        : 'bg-navy-950 border-navy-800 text-slate-300 hover:border-navy-600'
+                    }">${n}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Sleep Quality (1-10) -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-bold uppercase tracking-wider text-slate-300">Sleep Quality (1–10 Scale)</label>
+                <span id="val-sleepQuality" class="px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-400 font-mono font-bold text-sm">${state.sleepQuality} / 10</span>
+              </div>
+              <div class="grid grid-cols-10 gap-1.5">
+                ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+                  <button type="button" onclick="setRating('sleepQuality', ${n})"
+                    class="py-2.5 rounded-xl font-mono text-xs font-bold border transition ${
+                      Number(state.sleepQuality) === n
+                        ? 'bg-cyan-500 border-cyan-400 text-navy-950 shadow-md'
+                        : 'bg-navy-950 border-navy-800 text-slate-300 hover:border-navy-600'
+                    }">${n}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Athlete Signature / Initials & Safety Protocol -->
+            <div class="pt-2 border-t border-navy-800 space-y-3">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Athlete Signature / Initials *</label>
+                <input id="input-signature" type="text" required value="${escapeHtml(state.signature)}" oninput="updateField('signature', this.value)"
+                  placeholder="Type full name or initials to sign"
+                  class="w-full px-4 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white placeholder-slate-500 text-sm italic" />
+              </div>
+
+              <label class="flex items-start gap-3 p-3.5 rounded-2xl bg-navy-950/90 border ${state.safetyAck ? 'border-emerald-500/50' : 'border-amber-500/40'} cursor-pointer">
+                <input id="input-safetyAck" type="checkbox" required ${state.safetyAck ? 'checked' : ''} onchange="updateField('safetyAck', this.checked); renderCurrentStep();"
+                  class="mt-1 w-5 h-5 rounded accent-cyan-500 cursor-pointer shrink-0" />
+                <span class="text-xs text-slate-300 leading-relaxed">
+                  <strong class="text-white">Safety & Warm-Up Acknowledgment *:</strong> I have arrived early and properly warmed up. I understand all movements are maximal intensity, participation is voluntary, and I may stop any assessment at any time if safety is compromised.
+                </span>
+              </label>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // DEDICATED 6-MINUTE ERG RETURN MODE (WITHIN 7 DAYS)
+      // -----------------------------------------------------------------------
+      if (step.id === 'erg6Only') {
+        const rel6MinOnly = getRelativeErgDistance(state.erg6TotalDist);
+        const activeSheetUrl = getActiveGoogleScriptUrl();
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-teal-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">6-Minute Rowing Ergometer</h2>
+            <p class="text-sm text-slate-400 mt-1">Returning athlete quick-entry — complete within 7 days of your team evaluation.</p>
+          </div>
+
+          <!-- Confirm Athlete Identity for Sheet Matching -->
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-5 mb-5 shadow-xl">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-3">Athlete Identification & Erg Date</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Athlete Full Name *</label>
+                <input id="input-erg6-athleteName" type="text" value="${escapeHtml(state.athleteName)}" oninput="updateField('athleteName', this.value)"
+                  placeholder="Match name from eval"
+                  class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white text-xs sm:text-sm font-medium" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Age Category</label>
+                <select onchange="updateField('ageCategory', this.value)"
+                  class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white text-xs sm:text-sm font-medium">
+                  ${['Premier', 'Senior A (40+)', 'Senior B (50+)', 'Senior C (60+)'].map(cat =>
+                    `<option value="${cat}" ${state.ageCategory === cat ? 'selected' : ''}>${cat}</option>`
+                  ).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">6-Min Erg Date</label>
+                <input id="input-erg6Date" type="date" value="${escapeHtml(state.erg6Date)}" oninput="updateField('erg6Date', this.value)"
+                  class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-xs sm:text-sm font-medium" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Body Weight (${state.weightUnit})</label>
+                <input type="number" step="0.1" inputmode="decimal" value="${escapeHtml(state.bodyWeight)}" oninput="updateField('bodyWeight', this.value); refreshErg6OnlyRel();"
+                  placeholder="For relative dist"
+                  class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-xs sm:text-sm font-bold" />
+              </div>
+            </div>
+          </div>
+
+          ${renderProtocolBox([
+            'Damper resistance set to <strong>3–5</strong>; clean the rail before starting.',
+            'Set custom single-time workout for <strong>6 minutes with 2-minute split times</strong>.',
+            'Record Perceived Effort (Borg 1–20) and Distance at <strong>2\'</strong>, <strong>4\'</strong>, and <strong>Finish (6\')</strong>, plus final Heart Rate.',
+            'Take a photo of the ergometer memory screen and submit below (also email results to Coach & CC Co-Captain within 7 days).'
+          ])}
+
+          <!-- 6-Min Erg Inputs -->
+          <div class="bg-navy-900 border border-cyan-500/30 rounded-2xl p-4 sm:p-6 mb-5 shadow-xl">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">2' Effort (1–20)</label>
+                <input type="number" min="1" max="20" inputmode="numeric" value="${escapeHtml(state.erg6Min2Effort)}" oninput="updateField('erg6Min2Effort', this.value)"
+                  placeholder="1-20" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">2' Distance (m)</label>
+                <input type="number" inputmode="numeric" value="${escapeHtml(state.erg6Min2Dist)}" oninput="updateField('erg6Min2Dist', this.value)"
+                  placeholder="Meters" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">4' Effort (1–20)</label>
+                <input type="number" min="1" max="20" inputmode="numeric" value="${escapeHtml(state.erg6Min4Effort)}" oninput="updateField('erg6Min4Effort', this.value)"
+                  placeholder="1-20" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">4' Distance (m)</label>
+                <input type="number" inputmode="numeric" value="${escapeHtml(state.erg6Min4Dist)}" oninput="updateField('erg6Min4Dist', this.value)"
+                  placeholder="Meters" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Finish Effort (1–20)</label>
+                <input type="number" min="1" max="20" inputmode="numeric" value="${escapeHtml(state.erg6FinishEffort)}" oninput="updateField('erg6FinishEffort', this.value)"
+                  placeholder="1-20" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Final Split Dist (m)</label>
+                <input type="number" inputmode="numeric" value="${escapeHtml(state.erg6FinalSplitDist)}" oninput="updateField('erg6FinalSplitDist', this.value)"
+                  placeholder="Meters" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-extrabold text-cyan-400 mb-1">Total 6' Dist (m) *</label>
+                <input type="number" inputmode="numeric" value="${escapeHtml(state.erg6TotalDist)}" oninput="updateField('erg6TotalDist', this.value); refreshErg6OnlyRel();"
+                  placeholder="Meters" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-extrabold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-rose-400 mb-1">Finished HR (BPM)</label>
+                <input type="number" inputmode="numeric" value="${escapeHtml(state.erg6FinishHR)}" oninput="updateField('erg6FinishHR', this.value)"
+                  placeholder="BPM" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-sm font-bold" />
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-navy-800 text-xs mb-4">
+              <span class="text-slate-400">6-Minute BW Relative Row Erg Distance:</span>
+              <strong id="rel-6min-only-display" class="font-mono text-cyan-400">${rel6MinOnly}</strong>
+            </div>
+
+            ${renderBorgScaleHelper()}
+          </div>
+
+          <!-- Direct Submission for 6-Min Erg Return -->
+          <div class="bg-gradient-to-br from-navy-900 via-navy-900 to-cyan-950/50 border border-cyan-500/40 rounded-2xl p-4 sm:p-5 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">Submit 6-Minute Erg Results</div>
+                <p class="text-xs text-slate-300 mt-0.5">Logs this entry to the Google Sheet tagged as <strong class="text-white">6-Min Erg Follow-Up</strong>.</p>
+              </div>
+              <button type="button" onclick="submitSixMinErgFollowUp()" ${isSubmittingToSheet ? 'disabled' : ''}
+                class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 disabled:opacity-60 text-navy-950 font-extrabold text-xs sm:text-sm shrink-0 transition">
+                ${isSubmittingToSheet ? 'Submitting...' : 'Submit 6-Min Erg to Coach'}
+              </button>
+            </div>
+            <div id="sheet-submit-feedback" class="mt-3 ${state.lastSheetSubmission ? '' : 'hidden'}">
+              ${state.lastSheetSubmission ? `
+                <div class="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                  <span>✅</span>
+                  <span>Last submission recorded: ${escapeHtml(state.lastSheetSubmission)}</span>
+                </div>
+              ` : ''}
+            </div>
+            ${!activeSheetUrl ? '<p class="text-[11px] text-amber-400 mt-2.5">Note: No Google Sheet URL is set yet. Configure it in Step 0 or on the Summary screen.</p>' : ''}
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 1: SIT & REACH
+      // -----------------------------------------------------------------------
+      if (step.id === 'step1') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderProtocolBox([
+            'A 30-second stretch on each leg is permitted prior to testing.',
+            'Sit with both legs straight in front of you against the box.',
+            'Reach forward as far as possible in a fluid and continuous motion (no bouncing).',
+            'Maintain steady end position for 2 seconds while keeping legs straight throughout.',
+            'Perform 3 trials — the best score is recorded.'
+          ])}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1.5">Trial 1 (cm)</label>
+                <input type="number" step="0.5" inputmode="decimal" value="${escapeHtml(state.sitReachTrial1)}" oninput="updateField('sitReachTrial1', this.value)"
+                  placeholder="0.0" class="w-full px-3 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold text-center" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1.5">Trial 2 (cm)</label>
+                <input type="number" step="0.5" inputmode="decimal" value="${escapeHtml(state.sitReachTrial2)}" oninput="updateField('sitReachTrial2', this.value)"
+                  placeholder="0.0" class="w-full px-3 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold text-center" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1.5">Trial 3 (cm)</label>
+                <input type="number" step="0.5" inputmode="decimal" value="${escapeHtml(state.sitReachTrial3)}" oninput="updateField('sitReachTrial3', this.value)"
+                  placeholder="0.0" class="w-full px-3 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold text-center" />
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-navy-800">
+              <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Best of 3 Trials (Recorded Score in cm)</label>
+              <div class="relative">
+                <input id="input-sitReachBest" type="number" step="0.5" inputmode="decimal" value="${escapeHtml(state.sitReachBest)}" oninput="updateField('sitReachBest', this.value)"
+                  placeholder="Auto-calculated or enter best cm"
+                  class="w-full px-4 py-3.5 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-cyan-400">CM</span>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 2: 2-MINUTE ROWING ERGOMETER
+      // -----------------------------------------------------------------------
+      if (step.id === 'step2') {
+        container.innerHTML = `
+          <!-- Returning Athlete Quick-Entry Banner for 6-Min Erg -->
+          <div class="mb-5 bg-gradient-to-r from-teal-950/60 to-navy-900 border border-teal-500/40 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-teal-400">Returning Within 7 Days?</div>
+              <p class="text-xs text-slate-300 mt-0.5">Already completed your on-site stations and just logging your <strong>6-minute ergometer test</strong>?</p>
+            </div>
+            <button type="button" onclick="openSixMinErgReturn()"
+              class="px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-navy-950 font-extrabold text-xs shrink-0 transition">
+              Log 6-Min Erg Only →
+            </button>
+          </div>
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-5 shadow-xl">
+            <!-- 1-Minute Split -->
+            <div class="p-3.5 rounded-2xl bg-navy-950/80 border border-navy-800 space-y-3">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">1-Minute Mark (Split 1)</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1">1' Perceived Effort (1–20)</label>
+                  <input type="number" min="1" max="20" inputmode="numeric" value="${escapeHtml(state.row2Min1Effort)}" oninput="updateField('row2Min1Effort', this.value)"
+                    placeholder="e.g., 15" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-900 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1">1' Distance (Meters)</label>
+                  <input type="number" inputmode="numeric" value="${escapeHtml(state.row2Min1Dist)}" oninput="updateField('row2Min1Dist', this.value)"
+                    placeholder="e.g., 295" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-900 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 2-Minute Finish -->
+            <div class="p-3.5 rounded-2xl bg-navy-950/80 border border-navy-800 space-y-3">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-teal-400">2-Minute Finish (Split 2)</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1">Finish Perceived Effort (1–20)</label>
+                  <input type="number" min="1" max="20" inputmode="numeric" value="${escapeHtml(state.row2FinishEffort)}" oninput="updateField('row2FinishEffort', this.value)"
+                    placeholder="e.g., 19" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-900 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1">2nd Split Distance (Meters)</label>
+                  <input type="number" inputmode="numeric" value="${escapeHtml(state.row2Split2Dist)}" oninput="updateField('row2Split2Dist', this.value)"
+                    placeholder="e.g., 285" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-900 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono font-bold" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Distance & Finish HR -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Total 2-Min Row Distance (m)</label>
+                <div class="relative">
+                  <input id="input-row2TotalDist" type="number" inputmode="numeric" value="${escapeHtml(state.row2TotalDist)}" oninput="updateField('row2TotalDist', this.value)"
+                    placeholder="e.g., 580" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-base font-extrabold" />
+                  <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-cyan-400">M</span>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-rose-400 mb-1.5">Finish Heart Rate (BPM)</label>
+                <div class="relative">
+                  <input type="number" inputmode="numeric" value="${escapeHtml(state.row2FinishHR)}" oninput="updateField('row2FinishHR', this.value)"
+                    placeholder="e.g., 184" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-base font-extrabold" />
+                  <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">BPM</span>
+                </div>
+              </div>
+            </div>
+
+            ${renderBorgScaleHelper()}
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 3: DEAD HANG PULL-UPS
+      // -----------------------------------------------------------------------
+      if (step.id === 'step3') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderProtocolBox([
+            'Overhand grip (pronated) on the pull-up bar.',
+            'Chin must rise clearly above the bar at the top of each repetition.',
+            'Arms must return to full dead-hang extension at the bottom.',
+            '<strong>No kipping</strong> or swinging allowed.',
+            'If unable to perform unassisted pull-ups, a colored resistance band may be used to monitor progression.'
+          ], '5-minute rest follows this station.')}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div>
+              <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Completed Pull-Up Reps</label>
+              <input type="number" min="0" inputmode="numeric" value="${escapeHtml(state.pullUpReps)}" oninput="updateField('pullUpReps', this.value)"
+                placeholder="Enter total valid reps"
+                class="w-full px-4 py-3.5 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-xl font-extrabold" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Color Band Used (If Applicable)</label>
+              <select onchange="updateField('pullUpBand', this.value)"
+                class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white text-sm font-medium">
+                ${['None (Bodyweight)', 'Yellow (Extra Light)', 'Red (Light)', 'Black (Medium)', 'Purple (Heavy)', 'Green (Extra Heavy)', 'Blue (Max Assist)'].map(b =>
+                  `<option value="${b}" ${state.pullUpBand === b ? 'selected' : ''}>${b}</option>`
+                ).join('')}
+              </select>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 4: MAX REP BENCH PRESS (50% BW)
+      // -----------------------------------------------------------------------
+      if (step.id === 'step4') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderTargetLoadBanner(50, 'Target Barbell Load')}
+
+          ${renderProtocolBox([
+            'Weight set to <strong>50% of Body Weight</strong> (tested at all sessions).',
+            'Start with arms fully extended; lower bar under control to touch the chest, then press back to full lockout.',
+            'Keep feet flat on the floor throughout the set.',
+            'Reps must be continuous at a regular tempo of approximately <strong>1 rep/sec</strong>.'
+          ], '5-minute rest follows this station.')}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Actual Load Used (lbs)</label>
+                <input type="number" step="5" inputmode="decimal" value="${escapeHtml(state.bench50Load)}" oninput="updateField('bench50Load', this.value)"
+                  placeholder="${getTargetWeight(50) || 'Load (lbs)'}"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-bold" />
+              </div>
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Reps Completed</label>
+                <input type="number" min="0" inputmode="numeric" value="${escapeHtml(state.bench50Reps)}" oninput="updateField('bench50Reps', this.value)"
+                  placeholder="Enter reps"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 5: ONE-ARM DB ROW — LEFT ARM (25% BW)
+      // -----------------------------------------------------------------------
+      if (step.id === 'step5') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderTargetLoadBanner(25, 'Target Dumbbell Weight')}
+
+          ${renderProtocolBox([
+            '60-second maximum repetition test using <strong>25% of Body Weight</strong>.',
+            'Kneel with one knee and supporting hand on a flat bench.',
+            'Pull dumbbell all the way up to make contact with the front shoulder (anterior deltoid), then return arm to full extension.',
+            'Use of core is permitted and recommended. Aim for max speed / max valid reps.',
+            'You are permitted to pause briefly during the 60s, provided the dumbbell is held off the ground and bench (do not drop DB).'
+          ], '3-minute rest before testing your Right Arm.')}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Left Arm DB Load (lbs)</label>
+                <input type="number" step="5" inputmode="decimal" value="${escapeHtml(state.dbRowLeftLoad)}" oninput="updateField('dbRowLeftLoad', this.value)"
+                  placeholder="${getTargetWeight(25) || 'Load (lbs)'}"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-bold" />
+              </div>
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Left Arm Reps (in 60")</label>
+                <input type="number" min="0" inputmode="numeric" value="${escapeHtml(state.dbRowLeftReps)}" oninput="updateField('dbRowLeftReps', this.value)"
+                  placeholder="Enter reps"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 6: ONE-ARM DB ROW — RIGHT ARM (25% BW)
+      // -----------------------------------------------------------------------
+      if (step.id === 'step6') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderTargetLoadBanner(25, 'Target Dumbbell Weight')}
+
+          ${renderProtocolBox([
+            `Match the exact load used on the Left Arm (${state.dbRowLeftLoad || getTargetWeight(25) || "25% BW"} lbs).`,
+            'Pull dumbbell to contact front shoulder (anterior deltoid) and return arm to full extension.',
+            '60-second time limit; test continues as long as dumbbell does not touch ground or bench.'
+          ], '5-minute rest before Core Stability Assessment.')}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Right Arm DB Load (lbs)</label>
+                <input type="number" step="5" inputmode="decimal" value="${escapeHtml(state.dbRowRightLoad)}" oninput="updateField('dbRowRightLoad', this.value)"
+                  placeholder="${state.dbRowLeftLoad || getTargetWeight(25) || 'Load (lbs)'}"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-bold" />
+              </div>
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Right Arm Reps (in 60")</label>
+                <input type="number" min="0" inputmode="numeric" value="${escapeHtml(state.dbRowRightReps)}" oninput="updateField('dbRowRightReps', this.value)"
+                  placeholder="Enter reps"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 7: CORE STABILITY ASSESSMENT (PLANK)
+      // -----------------------------------------------------------------------
+      if (step.id === 'step7') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderProtocolBox([
+            '<strong>ON YOUR HANDS, STRAIGHT ARMS</strong> lined up directly under shoulders (NOT on elbows).',
+            'Keep neck in line with spine (look straight down) and hips level throughout all 8 stages.',
+            'Total protocol duration is <strong>180 seconds (3 minutes)</strong> across 8 continuous stages.'
+          ])}
+
+          <!-- Interactive 8-Stage Reference & Optional Live Stopwatch -->
+          <div class="bg-navy-900 border border-cyan-500/30 rounded-2xl p-4 sm:p-5 mb-5 shadow-xl">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-navy-800">
+              <div>
+                <div class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">8-Stage Progression Guide (180s)</div>
+                <div id="plank-guide-stage-badge" class="text-xs text-slate-300 font-semibold mt-0.5">Stage 1: Start Position (Straight-Arm Plank)</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="plank-guide-clock" class="px-3 py-1.5 rounded-xl bg-navy-950 border border-navy-700 font-mono font-extrabold text-sm text-cyan-400">${plankGuideElapsed}s / 180s</span>
+              </div>
+            </div>
+
+            <!-- Live Helper Stopwatch Buttons -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <button id="btn-plank-toggle" type="button" onclick="togglePlankGuideTimer()" class="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-navy-950 font-bold text-xs transition">
+                ${plankGuideRunning ? 'Pause Stopwatch' : 'Start Live 180s Stopwatch'}
+              </button>
+              <button type="button" onclick="recordPlankStopNow()" class="px-3.5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-bold text-xs transition">
+                Stop & Log Time
+              </button>
+              <button type="button" onclick="resetPlankGuideTimer()" class="px-3 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-300 font-semibold text-xs transition">
+                Reset
+              </button>
+            </div>
+
+            <div class="space-y-2 max-h-64 overflow-y-auto pr-1">
+              ${PLANK_STAGES.map(s => `
+                <div id="plank-stage-row-${s.stage}" class="p-2.5 rounded-xl border bg-navy-950/60 border-navy-800 text-slate-300">
+                  <div class="flex items-center justify-between text-xs font-bold">
+                    <span class="text-white">Stage ${s.stage}: ${s.title}</span>
+                    <span class="font-mono text-cyan-400 shrink-0 ml-2">${s.dur}s (${s.start}–${s.end}s)</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5">${s.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Recorded Plank Score -->
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Total Plank Time Held (Seconds)</label>
+                <div class="relative">
+                  <input id="input-plankSeconds" type="number" min="0" max="180" inputmode="numeric" value="${escapeHtml(state.plankSeconds)}" oninput="updateField('plankSeconds', this.value)"
+                    placeholder="e.g., 180"
+                    class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+                  <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-cyan-400">SEC</span>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Final Stage Reached</label>
+                <select onchange="updateField('plankStageReached', this.value)"
+                  class="w-full px-3.5 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white text-xs sm:text-sm font-medium">
+                  ${[
+                    'Stage 8 (Full 180s Completed)',
+                    'Stage 8 (Final Straight-Arm Hold)',
+                    'Stage 7 (Left Arm + Right Leg)',
+                    'Stage 6 (Right Arm + Left Leg)',
+                    'Stage 5 (Left Leg Extended)',
+                    'Stage 4 (Right Leg Extended)',
+                    'Stage 3 (Left Arm Extended)',
+                    'Stage 2 (Right Arm Extended)',
+                    'Stage 1 (Start Position)'
+                  ].map(st => `<option value="${st}" ${state.plankStageReached === st ? 'selected' : ''}>${st}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // OPTIONAL STATIONS PROMPT
+      // -----------------------------------------------------------------------
+      if (step.id === 'optionalPrompt') {
+        container.innerHTML = `
+          <div class="bg-navy-900 border border-navy-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <span class="inline-block px-3 py-1 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-xs font-extrabold uppercase tracking-wider mb-3">
+              ${step.badge}
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">Core Stations Complete!</h2>
+            <p class="text-sm text-slate-300 leading-relaxed mb-6">
+              Per the BARRACUDA 2025–26 Protocol, the following two stations are optional additional assessments completed during <strong>Evaluations #2 and #3</strong> after standard assessments:
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-7">
+              <div class="p-4 rounded-2xl bg-navy-950/90 border border-navy-800">
+                <div class="text-xs font-extrabold uppercase text-cyan-400 mb-1">Optional Station 8</div>
+                <div class="text-base font-bold text-white">Bench Press Max Rep (120 lbs)</div>
+                <div class="text-xs text-slate-400 mt-1">Preceded by 5-minute rest period.</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-navy-950/90 border border-navy-800">
+                <div class="text-xs font-extrabold uppercase text-cyan-400 mb-1">Optional Station 9</div>
+                <div class="text-base font-bold text-white">Bench Pull Max Rep (50% BW)</div>
+                <div class="text-xs text-slate-400 mt-1">Target: ${getTargetWeight(50) ? getTargetWeight(50) + ' lbs' : '50% BW'} • Preceded by 5-minute rest.</div>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <button type="button" onclick="chooseOptionalPath(true)" class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-navy-950 font-extrabold text-sm sm:text-base flex items-center justify-between shadow-lg shadow-cyan-500/20 transition">
+                <span>Yes — Include Optional Stations (Starts 5' Rest)</span>
+                <span>→</span>
+              </button>
+
+              <button type="button" onclick="chooseOptionalPath(false)" class="w-full py-4 px-5 rounded-2xl bg-navy-800 hover:bg-navy-700 border border-navy-600 text-white font-bold text-sm sm:text-base flex items-center justify-between transition">
+                <span>No — Skip to Evaluation Summary & 6-Min Erg Info</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 8: OPTIONAL BENCH PRESS (120 LBS)
+      // -----------------------------------------------------------------------
+      if (step.id === 'step8') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-teal-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderProtocolBox([
+            'Fixed barbell weight: <strong>120 lbs</strong> (or equivalent kg).',
+            'Arms fully extended at start; bar goes down to touch the chest each rep.',
+            'Feet remain flat on the floor.',
+            'Reps must be continuous at a regular tempo of approximately <strong>1 rep/sec</strong>.'
+          ], '5-minute rest follows before Optional Bench Pull.')}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Load Used (lbs)</label>
+                <input type="number" step="5" inputmode="decimal" value="${escapeHtml(state.optBench120Load)}" oninput="updateField('optBench120Load', this.value)"
+                  placeholder="120"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-bold" />
+              </div>
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Reps Completed</label>
+                <input type="number" min="0" inputmode="numeric" value="${escapeHtml(state.optBench120Reps)}" oninput="updateField('optBench120Reps', this.value)"
+                  placeholder="Enter reps"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // STEP 9: OPTIONAL BENCH PULL (50% BW)
+      // -----------------------------------------------------------------------
+      if (step.id === 'step9') {
+        container.innerHTML = `
+          <div class="mb-5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-teal-400">${step.badge}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${step.title}</h2>
+          </div>
+
+          ${renderTargetLoadBanner(50, 'Target Bench Pull Load')}
+
+          ${renderProtocolBox([
+            'Weight set to <strong>50% of Body Weight</strong>.',
+            'Chest remains flat on the bench during execution; feet are free (not anchored).',
+            'Hands must not swing past the chin.',
+            'Bar must touch the underside of the bench on every repetition.',
+            'Reps must be continuous (cannot pause between reps) at a regular tempo of approximately <strong>1 rep/sec</strong>.'
+          ])}
+
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Load Used (lbs)</label>
+                <input type="number" step="5" inputmode="decimal" value="${escapeHtml(state.optBenchPullLoad)}" oninput="updateField('optBenchPullLoad', this.value)"
+                  placeholder="${getTargetWeight(50) || 'Load (lbs)'}"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-navy-700 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-bold" />
+              </div>
+              <div>
+                <label class="block text-xs font-extrabold uppercase tracking-wider text-cyan-400 mb-1.5">Reps Completed</label>
+                <input type="number" min="0" inputmode="numeric" value="${escapeHtml(state.optBenchPullReps)}" oninput="updateField('optBenchPullReps', this.value)"
+                  placeholder="Enter reps"
+                  class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-cyan-500/50 focus:border-cyan-400 focus:outline-none text-white font-mono text-lg font-extrabold" />
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // -----------------------------------------------------------------------
+      // FINAL STEP: EVALUATION SUMMARY, 6-MIN ERG & EXPORT
+      // -----------------------------------------------------------------------
+      if (step.id === 'summary') {
+        const bwUnit = state.weightUnit;
+        const w50 = getTargetWeight(50);
+        const w25 = getTargetWeight(25);
+        const rel2Min = getRelativeErgDistance(state.row2TotalDist);
+        const rel6Min = getRelativeErgDistance(state.erg6TotalDist);
+        const activeSheetUrl = getActiveGoogleScriptUrl();
+
+        container.innerHTML = `
+          <div class="mb-6">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Evaluation Complete</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white print-text-dark mt-0.5">BARRACUDA DRACONA Official Results</h2>
+              </div>
+              <span class="text-xs text-slate-400 font-mono">${new Date().toLocaleDateString()}</span>
+            </div>
+          </div>
+
+          <!-- Primary Google Sheets Submission Card -->
+          <div class="bg-gradient-to-br from-navy-900 via-navy-900 to-cyan-950/50 border border-cyan-500/40 rounded-2xl p-4 sm:p-5 mb-5 shadow-xl no-print">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-400">Roster Submission</span>
+                  ${activeSheetUrl
+                    ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Google Sheet Linked</span>'
+                    : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">Endpoint Not Configured</span>'
+                  }
+                </div>
+                <p class="text-xs text-slate-300 mt-1">Send your completed evaluation directly to the BARRACUDA DRACONA team spreadsheet.</p>
+              </div>
+              <button id="btn-submit-sheet" type="button" onclick="submitToGoogleSheet()" ${isSubmittingToSheet ? 'disabled' : ''}
+                class="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 disabled:opacity-60 text-navy-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 shrink-0 transition">
+                <svg class="w-4 h-4 ${isSubmittingToSheet ? 'animate-spin' : ''}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <span>${isSubmittingToSheet ? 'Submitting to Google Sheet...' : 'Submit Results (Google Sheet)'}</span>
+              </button>
+            </div>
+
+            <!-- Submission Status Banner -->
+            <div id="sheet-submit-feedback" class="mt-3 ${state.lastSheetSubmission ? '' : 'hidden'}">
+              ${state.lastSheetSubmission ? `
+                <div class="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                  <span>✅</span>
+                  <span>Results saved to Google Sheet! (${escapeHtml(state.lastSheetSubmission)})</span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- Secondary Export Action Bar -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-6 no-print">
+            <button type="button" onclick="copyResultsToClipboard()" class="px-4 py-3 rounded-2xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              <span>Copy Results</span>
+            </button>
+            <button type="button" onclick="downloadCSV()" class="px-4 py-3 rounded-2xl bg-navy-800 hover:bg-navy-700 border border-navy-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+              <svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>Download CSV</span>
+            </button>
+            <button type="button" onclick="window.print()" class="px-4 py-3 rounded-2xl bg-navy-800 hover:bg-navy-700 border border-navy-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+              <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+              <span>Print / Save PDF</span>
+            </button>
+          </div>
+
+          <!-- Athlete Header Card -->
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl p-4 sm:p-5 mb-5 print-card">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+              <div>
+                <span class="text-slate-400 block">Athlete Name</span>
+                <strong class="text-sm text-white print-text-dark">${escapeHtml(state.athleteName || '—')}</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Age Category</span>
+                <strong class="text-sm text-white print-text-dark">${escapeHtml(state.ageCategory)}</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Body Weight</span>
+                <strong class="text-sm font-mono text-cyan-400 print-text-dark">${state.bodyWeight ? state.bodyWeight + ' ' + bwUnit : '—'}</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Morning RHR</span>
+                <strong class="text-sm font-mono text-white print-text-dark">${state.morningRHR ? state.morningRHR + ' BPM' : '—'}</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Sleep Quantity</span>
+                <strong class="text-sm font-mono text-white print-text-dark">${state.sleepQuantity} / 10</strong>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Sleep Quality</span>
+                <strong class="text-sm font-mono text-white print-text-dark">${state.sleepQuality} / 10</strong>
+              </div>
+              <div class="col-span-2">
+                <span class="text-slate-400 block">Signature</span>
+                <strong class="text-sm italic text-slate-200 print-text-dark">${escapeHtml(state.signature || '—')}</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Core Benchmarking Results Table -->
+          <div class="bg-navy-900 border border-navy-700/80 rounded-2xl overflow-hidden mb-6 print-card">
+            <div class="px-4 py-3 bg-navy-800/80 border-b border-navy-700 flex items-center justify-between">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-cyan-400 print-text-dark">Core Benchmarking Activities</h3>
+              <span class="text-[11px] text-slate-400">2026–27 Protocol</span>
+            </div>
+            <div class="divide-y divide-navy-800 print-border text-xs sm:text-sm">
+              ${summaryRow('Sit & Reach (Best of 3)', state.sitReachBest ? `${state.sitReachBest} cm` : '—', `Trials: ${[state.sitReachTrial1, state.sitReachTrial2, state.sitReachTrial3].filter(Boolean).join(', ') || '—'}`)}
+              ${summaryRow('2-Minute Row Erg Distance', state.row2TotalDist ? `${state.row2TotalDist} m` : '—', `1' Dist: ${state.row2Min1Dist || '—'}m | 2nd Split: ${state.row2Split2Dist || '—'}m`)}
+              ${summaryRow('2-Min Row Effort & HR', state.row2FinishHR ? `${state.row2FinishHR} BPM` : '—', `1' Borg: ${state.row2Min1Effort || '—'}/20 | Finish Borg: ${state.row2FinishEffort || '—'}/20`)}
+              ${summaryRow('2-Min BW Relative Row Dist.', rel2Min, 'Weight-adjusted ergometer score')}
+              ${summaryRow('Dead Hang Pull-Ups', state.pullUpReps !== '' ? `${state.pullUpReps} reps` : '—', `Band: ${state.pullUpBand}`)}
+              ${summaryRow('Max Rep Bench Press (50% BW)', state.bench50Reps !== '' ? `${state.bench50Reps} reps @ ${state.bench50Load || '—'} lbs` : '—', `Target 50% BW (nearest 5#): ${w50 ? w50 + ' lbs' : '—'}`)}
+              ${summaryRow('1\' One-Arm DB Row — Left', state.dbRowLeftReps !== '' ? `${state.dbRowLeftReps} reps @ ${state.dbRowLeftLoad || '—'} lbs` : '—', `Target 25% BW (nearest 5#): ${w25 ? w25 + ' lbs' : '—'}`)}
+              ${summaryRow('1\' One-Arm DB Row — Right', state.dbRowRightReps !== '' ? `${state.dbRowRightReps} reps @ ${state.dbRowRightLoad || '—'} lbs` : '—', `Target 25% BW (nearest 5#): ${w25 ? w25 + ' lbs' : '—'}`)}
+              ${summaryRow('Core Stability (Straight-Arm Plank)', state.plankSeconds !== '' ? `${state.plankSeconds} sec` : '—', state.plankStageReached)}
+            </div>
+          </div>
+
+          <!-- Optional Stations Results Table (if included or data entered) -->
+          ${(state.includeOptional || state.optBench120Reps || state.optBenchPullReps) ? `
+            <div class="bg-navy-900 border border-navy-700/80 rounded-2xl overflow-hidden mb-6 print-card">
+              <div class="px-4 py-3 bg-navy-800/80 border-b border-navy-700">
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-teal-400 print-text-dark">Optional Assessments (Evaluations #2 & #3)</h3>
+              </div>
+              <div class="divide-y divide-navy-800 print-border text-xs sm:text-sm">
+                ${summaryRow('Bench Press Max Rep (120 lbs)', state.optBench120Reps !== '' ? `${state.optBench120Reps} reps @ ${state.optBench120Load} lbs` : '—', 'Standard 120 lb benchmark')}
+                ${summaryRow('Bench Pull Max Rep (50% BW)', state.optBenchPullReps !== '' ? `${state.optBenchPullReps} reps @ ${state.optBenchPullLoad || '—'} lbs` : '—', `Target 50% BW (nearest 5#): ${w50 ? w50 + ' lbs' : '—'}`)}
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- 6-Minute Personal Erg Test Section (Within 7 Days) -->
+          <div class="bg-navy-900 border border-cyan-500/30 rounded-2xl p-4 sm:p-6 mb-6 print-card">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Personal Assessment • Within 7 Days</span>
+                <h3 class="text-lg font-extrabold text-white print-text-dark mt-1.5">6-Minute Rowing Ergometer Test</h3>
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-300 space-y-1 mb-4 bg-navy-950/70 p-3.5 rounded-xl border border-navy-800 no-print">
+              <p><strong class="text-cyan-400">Protocol:</strong> Damper resistance <strong>3–5</strong> • Clean rail • Single timed workout for <strong>6 minutes with 2' splits</strong> (record Borg 1–20 effort & distance at 2', 4', and Finish).</p>
+              <p><strong class="text-teal-400">Submission:</strong> Take a picture of the ergometer memory screen and submit or share your results within 7 days.</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">2' Effort (1–20)</label>
+                <input type="number" min="1" max="20" value="${escapeHtml(state.erg6Min2Effort)}" oninput="updateField('erg6Min2Effort', this.value)"
+                  placeholder="1-20" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">2' Distance (m)</label>
+                <input type="number" value="${escapeHtml(state.erg6Min2Dist)}" oninput="updateField('erg6Min2Dist', this.value)"
+                  placeholder="Meters" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">4' Effort (1–20)</label>
+                <input type="number" min="1" max="20" value="${escapeHtml(state.erg6Min4Effort)}" oninput="updateField('erg6Min4Effort', this.value)"
+                  placeholder="1-20" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">4' Distance (m)</label>
+                <input type="number" value="${escapeHtml(state.erg6Min4Dist)}" oninput="updateField('erg6Min4Dist', this.value)"
+                  placeholder="Meters" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Finish Effort (1–20)</label>
+                <input type="number" min="1" max="20" value="${escapeHtml(state.erg6FinishEffort)}" oninput="updateField('erg6FinishEffort', this.value)"
+                  placeholder="1-20" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Final Split Dist (m)</label>
+                <input type="number" value="${escapeHtml(state.erg6FinalSplitDist)}" oninput="updateField('erg6FinalSplitDist', this.value)"
+                  placeholder="Meters" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-cyan-400 mb-1">Total 6' Dist (m)</label>
+                <input id="input-erg6TotalDist" type="number" value="${escapeHtml(state.erg6TotalDist)}" oninput="updateField('erg6TotalDist', this.value); refresh6MinRel();"
+                  placeholder="Meters" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-cyan-500/50 text-white font-mono text-xs font-extrabold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-rose-400 mb-1">Finished HR (BPM)</label>
+                <input type="number" value="${escapeHtml(state.erg6FinishHR)}" oninput="updateField('erg6FinishHR', this.value)"
+                  placeholder="BPM" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-navy-700 text-white font-mono text-xs font-bold" />
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2.5 border-t border-navy-800 text-xs">
+              <span class="text-slate-400">6-Minute BW Relative Row Erg Distance:</span>
+              <strong id="rel-6min-display" class="font-mono text-cyan-400 print-text-dark">${rel6Min}</strong>
+            </div>
+          </div>
+        `;
+        return;
+      }
+    }
+
+    function summaryRow(label, value, subtext) {
+      return `
+        <div class="px-4 py-3 flex items-center justify-between gap-4">
+          <div>
+            <div class="font-bold text-slate-200 print-text-dark">${label}</div>
+            ${subtext ? `<div class="text-[11px] text-slate-400">${subtext}</div>` : ''}
+          </div>
+          <div class="font-mono font-extrabold text-right text-cyan-400 print-text-dark shrink-0">${value}</div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // INTERACTIVE HELPERS FOR STEP 0 & SUMMARY
+    // =========================================================================
+    function setWeightUnit(unit) {
+      state.weightUnit = unit;
+      saveState();
+      renderCurrentStep();
+    }
+
+    function refreshTargetPreviews() {
+      const box = document.getElementById('bw-target-preview');
+      if (!box) return;
+      box.innerHTML = `
+        <div class="bg-navy-950/90 border border-navy-800 rounded-xl px-3 py-2 flex items-center justify-between">
+          <span class="text-xs text-slate-400">50% BW (Bench Press/Pull)</span>
+          <span class="text-xs font-mono font-bold text-cyan-400">${getTargetWeight(50) ? getTargetWeight(50) + ' lbs' : '—'}</span>
+        </div>
+        <div class="bg-navy-950/90 border border-navy-800 rounded-xl px-3 py-2 flex items-center justify-between">
+          <span class="text-xs text-slate-400">25% BW (One-Arm DB Row)</span>
+          <span class="text-xs font-mono font-bold text-cyan-400">${getTargetWeight(25) ? getTargetWeight(25) + ' lbs' : '—'}</span>
+        </div>
+      `;
+    }
+
+    function setRating(field, val) {
+      state[field] = val;
+      saveState();
+      renderCurrentStep();
+    }
+
+    function refresh6MinRel() {
+      const el = document.getElementById('rel-6min-display');
+      if (el) el.textContent = getRelativeErgDistance(state.erg6TotalDist);
+    }
+
+    function refreshErg6OnlyRel() {
+      const el = document.getElementById('rel-6min-only-display');
+      if (el) el.textContent = getRelativeErgDistance(state.erg6TotalDist);
+    }
+
+    function openSixMinErgReturn() {
+      state.submissionType = '6-Min Erg Follow-Up';
+      state.currentStepId = 'erg6Only';
+      saveState();
+      renderCurrentStep();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // =========================================================================
+    // GOOGLE SHEETS SUBMISSION HANDLER
+    // =========================================================================
+    function buildGoogleSheetPayload() {
+      return {
+        timestamp: new Date().toISOString(),
+        submissionType: state.submissionType || 'Full Evaluation',
+        evalDate: state.evalDate || '',
+        erg6Date: state.erg6Date || '',
+        athleteName: (state.athleteName || '').trim(),
+        signature: (state.signature || '').trim(),
+        ageCategory: state.ageCategory || '',
+        bodyWeight: state.bodyWeight || '',
+        weightUnit: state.weightUnit || 'lbs',
+        restingHR: state.morningRHR || '',
+        sleepQuantity: state.sleepQuantity ?? '',
+        sleepQuality: state.sleepQuality ?? '',
+        sitAndReachCm: state.sitReachBest || '',
+        erg2MinTotalDist: state.row2TotalDist || '',
+        erg2Min1mRpe: state.row2Min1Effort || '',
+        erg2Min1mDist: state.row2Min1Dist || '',
+        erg2MinFinishRpe: state.row2FinishEffort || '',
+        erg2Min2ndSplitDist: state.row2Split2Dist || '',
+        erg2MinFinishHR: state.row2FinishHR || '',
+        erg2MinBwRelDist: getRelativeErgMetersOnly(state.row2TotalDist),
+        pullUpsReps: state.pullUpReps ?? '',
+        pullUpsBand: state.pullUpBand || '',
+        bench50Load: state.bench50Load || '',
+        bench50Reps: state.bench50Reps ?? '',
+        rowLeftLoad: state.dbRowLeftLoad || '',
+        rowLeftReps: state.dbRowLeftReps ?? '',
+        rowRightLoad: state.dbRowRightLoad || '',
+        rowRightReps: state.dbRowRightReps ?? '',
+        plankSec: state.plankSeconds ?? '',
+        optBench120Load: state.optBench120Load || '',
+        optBench120Reps: state.optBench120Reps ?? '',
+        optBenchPullLoad: state.optBenchPullLoad || '',
+        optBenchPullReps: state.optBenchPullReps ?? '',
+        erg6MinTotalDist: state.erg6TotalDist || '',
+        erg6Min2mRpe: state.erg6Min2Effort || '',
+        erg6Min2mDist: state.erg6Min2Dist || '',
+        erg6Min4mRpe: state.erg6Min4Effort || '',
+        erg6Min4mDist: state.erg6Min4Dist || '',
+        erg6MinFinishRpe: state.erg6FinishEffort || '',
+        erg6MinFinalSplitDist: state.erg6FinalSplitDist || '',
+        erg6MinFinishHR: state.erg6FinishHR || '',
+        erg6MinBwRelDist: getRelativeErgMetersOnly(state.erg6TotalDist)
+      };
+    }
+
+    function setSheetFeedback(type, message) {
+      const box = document.getElementById('sheet-submit-feedback');
+      if (!box) return;
+      box.classList.remove('hidden');
+      if (type === 'success') {
+        box.innerHTML = `
+          <div class="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-semibold flex items-start gap-2">
+            <span class="shrink-0">✅</span>
+            <span>${escapeHtml(message)}</span>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="p-3 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-200 text-xs font-medium flex items-start gap-2">
+            <span class="shrink-0">⚠️</span>
+            <span>${escapeHtml(message)} Your local browser backup is intact—you can also use <strong>Download CSV</strong> or <strong>Copy Results</strong> below.</span>
+          </div>
+        `;
+      }
+    }
+
+    async function submitToGoogleSheet() {
+      if (isSubmittingToSheet) return;
+
+      // Validate required baseline field
+      if (!state.athleteName || !state.athleteName.trim()) {
+        showToast('Please enter Athlete Name in Step 0 before submitting.', '⚠️');
+        setSheetFeedback('error', 'Missing Athlete Name: Please return to Step 0 to enter your name before submitting.');
+        return;
+      }
+
+      const endpointUrl = getActiveGoogleScriptUrl();
+      if (!endpointUrl) {
+        showToast('Google Sheet Web App URL is not configured yet.', '⚠️');
+        setSheetFeedback('error', 'No Google Sheet Web App URL is configured in the script or URL parameter.');
+        return;
+      }
+
+      isSubmittingToSheet = true;
+      renderCurrentStep();
+
+      const payload = buildGoogleSheetPayload();
+
+      try {
+        // Google Apps Script Web Apps redirect POST responses to googleusercontent.com,
+        // which can trigger a browser CORS "Failed to fetch" even after the row is written.
+        // Using mode: 'no-cors' sends the JSON payload cleanly and succeeds reliably.
+        await fetch(endpointUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const formattedTime = new Date().toLocaleString();
+        state.lastSheetSubmission = formattedTime;
+        saveState();
+        isSubmittingToSheet = false;
+        renderCurrentStep();
+        setSheetFeedback('success', `Results sent to Google Sheet! (${formattedTime})`);
+        showToast('Submitted to Google Sheet!', '✅');
+      } catch (err) {
+        console.error('Google Sheet submission error:', err);
+        isSubmittingToSheet = false;
+        renderCurrentStep();
+        setSheetFeedback('error', `Could not reach Google Sheet (${err.message || 'Network error'}).`);
+        showToast('Submission failed — check connection or URL.', '⚠️');
+      }
+    }
+
+    async function submitSixMinErgFollowUp() {
+      if (!state.athleteName || !state.athleteName.trim()) {
+        showToast('Please enter your Athlete Full Name first.', '⚠️');
+        const el = document.getElementById('input-erg6-athleteName');
+        if (el) el.focus();
+        return;
+      }
+      if (!state.erg6TotalDist || parseFloat(state.erg6TotalDist) <= 0) {
+        showToast('Please enter Total 6-Minute Erg Distance (meters).', '⚠️');
+        return;
+      }
+      state.submissionType = '6-Min Erg Follow-Up';
+      saveState();
+      await submitToGoogleSheet();
+    }
+
+    // =========================================================================
+    // EXPORT FUNCTIONS (CLIPBOARD & CSV)
+    // =========================================================================
+    function buildSummaryPlainText() {
+      const u = state.weightUnit;
+      const lines = [
+        'BARRACUDA DRACONA FITNESS EVALUATION 2026-2027 RESULTS',
+        `Evaluation Date: ${state.evalDate || new Date().toLocaleDateString()}`,
+        `Athlete: ${state.athleteName || 'N/A'} | Category: ${state.ageCategory}`,
+        `Body Weight: ${state.bodyWeight || 'N/A'} ${u} | Morning RHR: ${state.morningRHR || 'N/A'} BPM`,
+        `Sleep Quantity: ${state.sleepQuantity}/10 | Sleep Quality: ${state.sleepQuality}/10`,
+        '--------------------------------------------------',
+        `1. Sit & Reach (Best of 3): ${state.sitReachBest || 'N/A'} cm (Trials: ${state.sitReachTrial1 || '-'}, ${state.sitReachTrial2 || '-'}, ${state.sitReachTrial3 || '-'})`,
+        `2. 2-Min Row Erg: ${state.row2TotalDist || 'N/A'} m | 1' Dist: ${state.row2Min1Dist || '-'} m (Borg ${state.row2Min1Effort || '-'}) | 2nd Split: ${state.row2Split2Dist || '-'} m (Borg ${state.row2FinishEffort || '-'}) | Finish HR: ${state.row2FinishHR || '-'} BPM`,
+        `   2-Min BW Relative Distance: ${getRelativeErgDistance(state.row2TotalDist)}`,
+        `3. Dead Hang Pull-Ups: ${state.pullUpReps || 'N/A'} reps (Band: ${state.pullUpBand})`,
+        `4. Max Rep Bench Press (50% BW): ${state.bench50Reps || 'N/A'} reps @ ${state.bench50Load || 'N/A'} lbs`,
+        `5A. 1' One-Arm DB Row Left (25% BW): ${state.dbRowLeftReps || 'N/A'} reps @ ${state.dbRowLeftLoad || 'N/A'} lbs`,
+        `5B. 1' One-Arm DB Row Right (25% BW): ${state.dbRowRightReps || 'N/A'} reps @ ${state.dbRowRightLoad || 'N/A'} lbs`,
+        `6. Core Stability (Straight-Arm Plank): ${state.plankSeconds || 'N/A'} sec (${state.plankStageReached})`
+      ];
+
+      if (state.includeOptional || state.optBench120Reps || state.optBenchPullReps) {
+        lines.push(
+          '--- Optional Assessments (Evals #2 & #3) ---',
+          `8. Bench Press (120 lbs): ${state.optBench120Reps || 'N/A'} reps @ ${state.optBench120Load} lbs`,
+          `9. Bench Pull (50% BW): ${state.optBenchPullReps || 'N/A'} reps @ ${state.optBenchPullLoad || 'N/A'} lbs`
+        );
+      }
+
+      if (state.erg6TotalDist) {
+        lines.push(
+          `--- 6-Minute Personal Row Erg (${state.erg6Date || 'Date N/A'}) ---`,
+          `Total Distance: ${state.erg6TotalDist} m | 2': ${state.erg6Min2Dist || '-'}m (RPE ${state.erg6Min2Effort || '-'}) | 4': ${state.erg6Min4Dist || '-'}m (RPE ${state.erg6Min4Effort || '-'}) | Finish Split: ${state.erg6FinalSplitDist || '-'}m (RPE ${state.erg6FinishEffort || '-'}) | HR: ${state.erg6FinishHR || '-'} BPM`,
+          `6-Min BW Relative Distance: ${getRelativeErgDistance(state.erg6TotalDist)}`
+        );
+      }
+
+      return lines.join('\n');
+    }
+
+    function copyResultsToClipboard() {
+      const text = buildSummaryPlainText();
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Results copied to clipboard!', '📋');
+      } catch (err) {
+        showToast('Unable to copy automatically.', '⚠️');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function downloadCSV() {
+      const rows = [
+        ['Field', 'Value', 'Unit / Notes'],
+        ['Evaluation Date', state.evalDate, ''],
+        ['6-Min Erg Date', state.erg6Date, ''],
+        ['Athlete Name', state.athleteName, ''],
+        ['Age Category', state.ageCategory, ''],
+        ['Body Weight', state.bodyWeight, state.weightUnit],
+        ['Morning Resting HR', state.morningRHR, 'BPM'],
+        ['Sleep Quantity', state.sleepQuantity, '1-10'],
+        ['Sleep Quality', state.sleepQuality, '1-10'],
+        ['Sit & Reach Best', state.sitReachBest, 'cm'],
+        ['2-Min Row Erg Total Distance', state.row2TotalDist, 'meters'],
+        ['2-Min Row 1-Min Effort', state.row2Min1Effort, 'Borg 1-20'],
+        ['2-Min Row 1-Min Distance', state.row2Min1Dist, 'meters'],
+        ['2-Min Row Finish Effort', state.row2FinishEffort, 'Borg 1-20'],
+        ['2-Min Row 2nd Split Distance', state.row2Split2Dist, 'meters'],
+        ['2-Min Row Finish HR', state.row2FinishHR, 'BPM'],
+        ['2-Min BW Relative Row Distance', getRelativeErgDistance(state.row2TotalDist), ''],
+        ['Dead Hang Pull-Ups Reps', state.pullUpReps, state.pullUpBand],
+        ['Bench Press 50% BW Load', state.bench50Load, 'lbs'],
+        ['Bench Press 50% BW Reps', state.bench50Reps, 'reps'],
+        ['1-Min DB Row Left Load', state.dbRowLeftLoad, 'lbs'],
+        ['1-Min DB Row Left Reps', state.dbRowLeftReps, 'reps'],
+        ['1-Min DB Row Right Load', state.dbRowRightLoad, 'lbs'],
+        ['1-Min DB Row Right Reps', state.dbRowRightReps, 'reps'],
+        ['Core Stability Plank Time', state.plankSeconds, 'seconds'],
+        ['Core Stability Stage', state.plankStageReached, ''],
+        ['Optional Bench Press 120lb Load', state.optBench120Load, 'lbs'],
+        ['Optional Bench Press 120lb Reps', state.optBench120Reps, 'reps'],
+        ['Optional Bench Pull 50% BW Load', state.optBenchPullLoad, 'lbs'],
+        ['Optional Bench Pull 50% BW Reps', state.optBenchPullReps, 'reps'],
+        ['6-Min Row Erg Total Distance', state.erg6TotalDist, 'meters'],
+        ['6-Min Row 2-Min Effort', state.erg6Min2Effort, 'Borg 1-20'],
+        ['6-Min Row 2-Min Distance', state.erg6Min2Dist, 'meters'],
+        ['6-Min Row 4-Min Effort', state.erg6Min4Effort, 'Borg 1-20'],
+        ['6-Min Row 4-Min Distance', state.erg6Min4Dist, 'meters'],
+        ['6-Min Row Finish Effort', state.erg6FinishEffort, 'Borg 1-20'],
+        ['6-Min Row Final Split Distance', state.erg6FinalSplitDist, 'meters'],
+        ['6-Min Row Finish HR', state.erg6FinishHR, 'BPM']
+      ];
+
+      const csvContent = rows
+        .map(r => r.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','))
+        .join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const safeName = (state.athleteName || 'Athlete').replace(/[^a-z0-9]/gi, '_');
+      link.href = url;
+      link.download = `BARRACUDA_DRACONA_Eval_2026_2027_${safeName}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast('CSV file downloaded!', '📥');
+    }
+
+    // =========================================================================
+    // INITIALIZATION
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSoundIcons();
+      renderCurrentStep();
+    });
+  </script>
+</body>
+</html>
